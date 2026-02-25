@@ -16,7 +16,7 @@ const Gameboard = (() => {
 })();
 
 const Player = (name, marker) => {
-
+    return { name, marker };
 };
 
 const gameController = (() => {
