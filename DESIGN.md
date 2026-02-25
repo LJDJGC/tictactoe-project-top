@@ -31,3 +31,11 @@ Gameboard Moduleを作り、盤面９面、指定の場所にマークを置く
 
 すでに埋まっているマス目には○×を置くことができない
 
+GameControllerのロジック
+初期設定：プレイヤー２人を作成し、activePlayerを設定する。
+switchPlayerTurn：ターンを皇太子、コンソールに「次は〇〇さんの番です」と表示
+playRound(index):これが外部（コンソール）から叩くメイン関数になるらしい。
+１.Gameboard.playMarkerを呼ぶ
+２.成功したら、勝利判定を行う。
+３.勝負がつかなければターン交代。
+４.現在の盤面をconsole.logで表示する（デバック用）
