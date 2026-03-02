@@ -35,6 +35,24 @@ const gameController = (() => {
         [0, 4, 8], [2, 4, 6]
     ];
 
+    const checkWinner = () => {
+        const board = Gameboard.getBoard();
+
+        for (let i = 0; i < winningConditions.length; i++) {
+            const condition = winningConditions[i];
+
+            const a = condition[0];
+            const b = condition[1];
+            const c = condition[2];
+
+            if (board[a] !== "" && board[a] === board[b] && board[a] === board[c]) {
+                return true;
+            }
+        }
+
+        return false;
+    };
+
 
     const switchPlayerTurn = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
@@ -47,4 +65,4 @@ const gameController = (() => {
         console.log(`${getActivePlayer().name} のターンです。`);
         console.log(board);
     }
-})();
+})(); 
