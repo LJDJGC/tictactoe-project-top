@@ -37,6 +37,7 @@ const gameController = (() => {
 
 
     const switchPlayerTurn = () => {
+        activePlayer = activePlayer === players[0] ? players[1] : players[0];
         // TODO: activePlayer を切り替える（三項演算子がおすすめ）
         // activePlayer = activePlayer === players[0] ? ... : ...;
     };
