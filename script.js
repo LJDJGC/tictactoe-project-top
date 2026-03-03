@@ -62,6 +62,25 @@ const gameController = (() => {
 
     const getActivePlayer = () => activePlayer; 
     
+
+    const playRound = (index) => {
+        const isSuccess = Gameboard.placeMarker(index, activePlayer.marker);
+
+        if (!isSuccess) {
+            console.log("そのマスは既に埋まっています。別の場所を選んでください。");
+            return;
+        }
+
+        if (checkWinner()) {
+            console.log(`勝者: ${activePlayer.name}! おめでとうございます！`)
+            return;
+        }
+
+        switchPlayerTurn();
+
+        printNewRound();
+    }
+
     {
         const board = Gameboard.getBoard();
         console.log(`${getActivePlayer().name} のターンです。`);
