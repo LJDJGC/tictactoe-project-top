@@ -60,7 +60,9 @@ const gameController = (() => {
         // activePlayer = activePlayer === players[0] ? ... : ...;
     };
 
-    const getActivePlayer = () => {
+    const getActivePlayer = () => activePlayer; 
+    
+    {
         const board = Gameboard.getBoard();
         console.log(`${getActivePlayer().name} のターンです。`);
         console.log(board);
