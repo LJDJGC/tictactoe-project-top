@@ -53,6 +53,16 @@ const gameController = (() => {
         return false;
     };
 
+    const checkDraw = () => {
+        const board = Gameboard.getBoard();
+
+        if (!board.includes("")) {
+            return true;
+        }
+
+        return false;
+    }
+
 
     const switchPlayerTurn = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
@@ -67,12 +77,17 @@ const gameController = (() => {
         const isSuccess = Gameboard.placeMarker(index, activePlayer.marker);
 
         if (!isSuccess) {
-            console.log("そのマスは既に埋まっています。別の場所を選んでください。");
+            console.log("That space is already filled. Please choose another space.");
             return;
         }
 
         if (checkWinner()) {
-            console.log(`勝者: ${activePlayer.name}! おめでとうございます！`)
+            console.log(`Winner: ${activePlayer.name}! congratulations!`)
+            return;
+        }
+
+        if (checkDraw()) {
+            console.log("draw!");
             return;
         }
 
@@ -81,9 +96,14 @@ const gameController = (() => {
         printNewRound();
     }
 
-    {
+    const printNewRound = () => {
         const board = Gameboard.getBoard();
-        console.log(`${getActivePlayer().name} のターンです。`);
+        console.log(`${getActivePlayer().name} , It's your turn.`);
         console.log(board);
     }
+
+    printNewRound();
+
+    return { playRound };
 })(); 
+
