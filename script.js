@@ -107,3 +107,36 @@ const gameController = (() => {
     return { playRound };
 })(); 
 
+constScreenController = (() => {
+    const boardDiv = document.querySelector(".board");
+
+    const updateScreen = () => {
+        const board = Gameboard.getBoard();
+        const activePlayer = gameController.getActivePlayer();
+
+        boardDiv.textContent = "";
+
+        board.forEach((cellMark, index) => {
+            const cellButton = ducument.createElement("div");
+            cellButton.classList.add("cell");
+            cellButton.dataset.index = index;
+            cellButton.textContent = cellMark;
+            
+            boardDiv.appendChild(cellButton);
+        });
+    };
+
+    const clickHandlerBoard = (e) => {
+        const selectedIndex = e.target.dataset.index;
+
+        if (!selectedIndex) return;
+
+        gameController.playRound(selectedIndex);
+
+        updateScreen();
+    };
+
+    boardDiv.addEventListener("click", clickHandlerBoard);
+
+    updateScreen();
+})();
