@@ -104,20 +104,22 @@ const gameController = (() => {
 
     printNewRound();
 
-    return { playRound };
+    return { playRound, getActivePlayer };
 })(); 
 
-constScreenController = (() => {
+const ScreenController = (() => {
     const boardDiv = document.querySelector(".board");
+    const boardMessage = document.querySelector(".message");
 
     const updateScreen = () => {
         const board = Gameboard.getBoard();
         const activePlayer = gameController.getActivePlayer();
 
         boardDiv.textContent = "";
+        boardMessage.textContent = `${activePlayer.name} , It's your turn.`;
 
         board.forEach((cellMark, index) => {
-            const cellButton = ducument.createElement("div");
+            const cellButton = document.createElement("div");
             cellButton.classList.add("cell");
             cellButton.dataset.index = index;
             cellButton.textContent = cellMark;
