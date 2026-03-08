@@ -72,22 +72,23 @@ const gameController = (() => {
 
     const getActivePlayer = () => activePlayer; 
     
+    let gameMessage = "";
+    const getGameMessage = () =>  gameMessage;
 
     const playRound = (index) => {
         const isSuccess = Gameboard.placeMarker(index, activePlayer.marker);
 
         if (!isSuccess) {
-            console.log("That space is already filled. Please choose another space.");
             return;
         }
 
         if (checkWinner()) {
-            console.log(`Winner: ${activePlayer.name}! congratulations!`)
+            gameMessage = `Winner: ${activePlayer.name}! congratulations!`;
             return;
         }
 
         if (checkDraw()) {
-            console.log("draw!");
+            gameMessage = `Draw!`;
             return;
         }
 
@@ -104,7 +105,7 @@ const gameController = (() => {
 
     printNewRound();
 
-    return { playRound, getActivePlayer };
+    return { playRound, getActivePlayer, getGameMessage };
 })(); 
 
 const ScreenController = (() => {
@@ -114,9 +115,15 @@ const ScreenController = (() => {
     const updateScreen = () => {
         const board = Gameboard.getBoard();
         const activePlayer = gameController.getActivePlayer();
+        const message = gameController.getGameMessage();
 
         boardDiv.textContent = "";
+
+        if (message !== "") {
+            boardMessage.textContent = message;
+        } else {
         boardMessage.textContent = `${activePlayer.name} , It's your turn.`;
+        }
 
         board.forEach((cellMark, index) => {
             const cellButton = document.createElement("div");
