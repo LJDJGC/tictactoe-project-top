@@ -2,6 +2,10 @@ const Gameboard = (() => {
     //3x3の盤面
     let board = ["", "", "", "", "", "", "", "", "", ];
 
+    const resetBoard = () => {
+        board = ["", "", "", "", "", "", "", "", "", ];
+    };
+
     const getBoard = () => [...board];
 
     const placeMarker = (index, marker) => {
@@ -12,7 +16,7 @@ const Gameboard = (() => {
         return false;
     };
 
-    return { getBoard, placeMarker};
+    return { resetBoard, getBoard, placeMarker};
 })();
 
 const Player = (name, marker) => {
@@ -26,6 +30,7 @@ const gameController = (() => {
     ];
 
     let activePlayer = players[0];
+    let isGameOver = false;
 
 
 
@@ -61,8 +66,14 @@ const gameController = (() => {
         }
 
         return false;
-    }
+    };
 
+    const resetBoard = () => {
+        Gameboard.resetBoard();
+        activePlayer = players[0];
+        gameMessage = "";
+        isGameOver = false;
+    };
 
     const switchPlayerTurn = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
@@ -76,6 +87,10 @@ const gameController = (() => {
     const getGameMessage = () =>  gameMessage;
 
     const playRound = (index) => {
+        if (isGameOver === true) { 
+            return;
+        }
+
         const isSuccess = Gameboard.placeMarker(index, activePlayer.marker);
 
         if (!isSuccess) {
@@ -84,11 +99,13 @@ const gameController = (() => {
 
         if (checkWinner()) {
             gameMessage = `Winner: ${activePlayer.name}! congratulations!`;
+            isGameOver = true;
             return;
         }
 
         if (checkDraw()) {
             gameMessage = `Draw!`;
+            isGameOver = true;
             return;
         }
 
@@ -105,12 +122,13 @@ const gameController = (() => {
 
     printNewRound();
 
-    return { playRound, getActivePlayer, getGameMessage };
+    return { playRound, getActivePlayer, getGameMessage, resetBoard };
 })(); 
 
 const ScreenController = (() => {
     const boardDiv = document.querySelector(".board");
     const boardMessage = document.querySelector(".message");
+    const resetButton = document.querySelector(".restart-btn");
 
     const updateScreen = () => {
         const board = Gameboard.getBoard();
@@ -146,6 +164,11 @@ const ScreenController = (() => {
     };
 
     boardDiv.addEventListener("click", clickHandlerBoard);
+
+    resetButton.addEventListener("click", () => {
+        gameController.resetBoard();
+        updateScreen();
+    });
 
     updateScreen();
 })();
