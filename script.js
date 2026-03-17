@@ -8,7 +8,7 @@ const Gameboard = (() => {
 
     const getBoard = () => [...board];
 
-    const placeMarker = (index, marker) => {
+    const placeMarker = (index, marker) => {[[[]]]
         if (board[index] === "") {
             board[index] = marker;
             return true;
@@ -19,9 +19,16 @@ const Gameboard = (() => {
     return { resetBoard, getBoard, placeMarker};
 })();
 
-const Player = (name, marker) => {
-    return { name, marker };
-};
+//const Player = (name, marker) => { //
+//    return { name, marker }; //
+//}; //
+
+class Player {
+    constructor(name, marker) {
+        thisname = name;
+        this.marker = marker;
+    }
+}
 
 const gameController = (() => {
     const players = [
