@@ -20,21 +20,23 @@
 //})(); 
 
 class Gameboard {
+    #board;
+
     constructor() {
-        this.board = ["", "", "", "", "", "", "", "", "", ];
+        this.#board = ["", "", "", "", "", "", "", "", "", ];
     }
 
     resetBoard() {
-        this.board = ["", "", "", "", "", "", "", "", "", ];  
+        this.#board = ["", "", "", "", "", "", "", "", "", ];  
     }
 
     getBoard() {
-        return[...this.board];
+        return[...this.#board];
     }
 
     placeMarker(index, marker) {
-        if(this.board[index] === "") {
-            this.board[index] = marker;
+        if(this.#board[index] === "") {
+            this.#board[index] = marker;
             return true;
         }
         return false;
